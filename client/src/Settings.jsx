@@ -40,75 +40,73 @@ export default function Settings({ onClose }) {
   };
 
   return (
-    <div className="settings-overlay">
-      <div className="settings-panel">
-        <h2 className="settings-heading">⚙️ Settings</h2>
+    <div className="container">
+      <h2 className="title">⚙️ Settings</h2>
 
-        <label className="settings-label">
-          User Email
-          <input
-            type="email"
-            value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
-            className="settings-input"
-          />
-        </label>
+      <label className="settings-label">
+        User Email
+        <input
+          type="email"
+          value={userEmail}
+          onChange={(e) => setUserEmail(e.target.value)}
+          className="settings-input"
+        />
+      </label>
 
-        <label className="settings-label">
-          Contact Email
-          <input
-            type="email"
-            value={contactEmail}
-            onChange={(e) => setContactEmail(e.target.value)}
-            className="settings-input"
-          />
-        </label>
+      <label className="settings-label">
+        Contact Email
+        <input
+          type="email"
+          value={contactEmail}
+          onChange={(e) => setContactEmail(e.target.value)}
+          className="settings-input"
+        />
+      </label>
 
-        <label className="settings-label">
-          Message
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="settings-input"
-          />
-        </label>
+      <label className="settings-label">
+        Message
+        <textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          className="settings-input"
+        />
+      </label>
 
-        <label className="settings-label">
-          Check Interval (seconds)
-          <input
-            type="number"
-            value={interval}
-            onChange={(e) => setInterval(Number(e.target.value))}
-            className="settings-input"
-          />
-        </label>
+      <label className="settings-label">
+        Check Interval (seconds)
+        <input
+          type="number"
+          value={interval}
+          onChange={(e) => setInterval(Number(e.target.value))}
+          className="settings-input"
+        />
+      </label>
 
-        <label className="settings-label">
-          Thumbs Up Image URL
-          <input
-            type="text"
-            value={thumbsUpUrl}
-            onChange={(e) => setThumbsUpUrl(e.target.value)}
-            className="settings-input"
-          />
-          <img src={thumbsUpUrl} alt="Preview Up" className="settings-preview" />
-        </label>
+      <label className="settings-label">
+        Thumbs Up Image URL
+        <input
+          type="text"
+          value={thumbsUpUrl}
+          onChange={(e) => setThumbsUpUrl(e.target.value)}
+          className="settings-input"
+        />
+        <img src={thumbsUpUrl} alt="Preview Up" className="thumb" />
+      </label>
 
-        <label className="settings-label">
-          Thumbs Down Image URL
-          <input
-            type="text"
-            value={thumbsDownUrl}
-            onChange={(e) => setThumbsDownUrl(e.target.value)}
-            className="settings-input"
-          />
-          <img src={thumbsDownUrl} alt="Preview Down" className="settings-preview" />
-        </label>
+      <label className="settings-label">
+        Thumbs Down Image URL
+        <input
+          type="text"
+          value={thumbsDownUrl}
+          onChange={(e) => setThumbsDownUrl(e.target.value)}
+          className="settings-input"
+        />
+        <img src={thumbsDownUrl} alt="Preview Down" className="thumb" />
+      </label>
 
-        <div className="settings-buttons">
-          <button onClick={saveSettings} className="settings-save">Save</button>
-          <button onClick={onClose} className="settings-cancel">Cancel</button>
-        </div>
+      <div className="settings-buttons">
+        <button onClick={saveSettings} className="settings-save">Save</button>
+        <button onClick={onClose} className="settings-cancel">Back</button>
       </div>
     </div>
   );
