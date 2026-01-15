@@ -5,26 +5,30 @@ body {
 }
 
 .container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   text-align: center;
+  padding: 1rem;
 }
 
-img.thumb {
-  max-width: 200px;   /* cap size */
-  width: 80%;         /* scale to device */
-  height: auto;
-  margin: 1rem auto;
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.timer {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/* Thumbs image: always centered, fixed % of screen height */
+.thumb {
   display: block;
-}
-
-img.tap {
-  max-width: 150px;
-  width: 60%;
-  height: auto;
-  margin-top: 1rem;
+  margin: 1rem auto;
+  height: 30vh;   /* 30% of screen height */
+  width: auto;    /* keep aspect ratio */
   cursor: pointer;
 }
