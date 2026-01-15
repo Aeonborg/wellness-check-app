@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Settings from "./Settings";
+import EditPopup from "./EditPopup";
 import "./index.css";
 
 export default function App() {
   const DEFAULT_INTERVAL = 604800; // 7 days
   const [secondsLeft, setSecondsLeft] = useState(DEFAULT_INTERVAL);
-  const [showSettings, setShowSettings] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   const saved = JSON.parse(localStorage.getItem("userSettings") || "{}");
   const thumbsUpUrl =
     saved.thumbsUpUrl ||
-    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-up.jpg";
+    "https://.../thumbs-up.jpg";
   const thumbsDownUrl =
     saved.thumbsDownUrl ||
-    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-down.jpg";
+    "https://.../thumbs-down.jpg";
   const intervalSeconds = saved.interval || DEFAULT_INTERVAL;
 
   useEffect(() => {
@@ -27,10 +27,6 @@ export default function App() {
     setSecondsLeft(intervalSeconds);
   };
 
-  if (showSettings) {
-    return <Settings onClose={() => setShowSettings(false)} />;
-  }
-
   return (
     <div className="container">
       <h1 className="title">Wellness Check</h1>
@@ -41,8 +37,10 @@ export default function App() {
         alt="Thumb picture"
         className="thumb"
         onClick={handleThumbClick}
-        onDoubleClick={() => setShowSettings(true)}
+        onDoubleClick={() => setShowEdit(true)}
       />
+
+      {showEdit && <EditPopup onClose={() => setShowEdit(false)} />}
     </div>
   );
 }
