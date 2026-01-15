@@ -24,10 +24,12 @@ export default function App() {
   }, []);
 
   const handleThumbClick = () => {
-    // If timer > 0, just reset without changing display
-    // If timer <= 0, reset and switch back to thumbs-up
     setSecondsLeft(intervalSeconds);
   };
+
+  if (showSettings) {
+    return <Settings onClose={() => setShowSettings(false)} />;
+  }
 
   return (
     <div className="container">
@@ -41,8 +43,6 @@ export default function App() {
         onClick={handleThumbClick}
         onDoubleClick={() => setShowSettings(true)}
       />
-
-      {showSettings && <Settings onClose={() => setShowSettings(false)} />}
     </div>
   );
 }
