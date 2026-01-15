@@ -4,11 +4,14 @@ export default function Settings({ onClose }) {
   const [userEmail, setUserEmail] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [message, setMessage] = useState("No check-in received. Please reach out.");
-  const [interval, setInterval] = useState(604800); // default 7 days
-  const [thumbsUpUrl, setThumbsUpUrl] = useState("/images/thumbs-up.jpg");
-  const [thumbsDownUrl, setThumbsDownUrl] = useState("/images/thumbs-down.jpg");
+  const [interval, setInterval] = useState(604800);
+  const [thumbsUpUrl, setThumbsUpUrl] = useState(
+    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-up.jpg"
+  );
+  const [thumbsDownUrl, setThumbsDownUrl] = useState(
+    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-down.jpg"
+  );
 
-  // load saved settings
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("userSettings"));
     if (saved) {
@@ -16,8 +19,8 @@ export default function Settings({ onClose }) {
       setContactEmail(saved.contactEmail || "");
       setMessage(saved.message || "");
       setInterval(saved.interval || 604800);
-      setThumbsUpUrl(saved.thumbsUpUrl || "/images/thumbs-up.jpg");
-      setThumbsDownUrl(saved.thumbsDownUrl || "/images/thumbs-down.jpg");
+      setThumbsUpUrl(saved.thumbsUpUrl || thumbsUpUrl);
+      setThumbsDownUrl(saved.thumbsDownUrl || thumbsDownUrl);
     }
   }, []);
 
