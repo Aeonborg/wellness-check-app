@@ -7,6 +7,12 @@ export default function App() {
   const [status, setStatus] = useState("pending"); // "pending", "ok", "notok"
   const [showSettings, setShowSettings] = useState(false);
 
+  // Load saved settings (images, interval) from localStorage
+  const saved = JSON.parse(localStorage.getItem("userSettings") || "{}");
+  const thumbsUpUrl = saved.thumbsUpUrl || "/images/thumbs-up.jpg";
+  const thumbsDownUrl = saved.thumbsDownUrl || "/images/thumbs-down.jpg";
+  const intervalSeconds = saved.interval || DEFAULT_INTERVAL;
+
   // countdown effect
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,38 +30,41 @@ export default function App() {
 
   // thumbs up resets timer
   const handleThumbsUp = () => {
-    setSecondsLeft(DEFAULT_INTERVAL);
+    setSecondsLeft(intervalSeconds);
     setStatus("ok");
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 gap-6">
-      <h1 className="text-2xl font-bold">Wellness Check</h1>
-      <p className="text-lg">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 gap-6 px-4">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-center">
+        Wellness Check
+      </h1>
+
+      <p className="text-base md:text-lg lg:text-xl">
         Time left: {Math.floor(secondsLeft / 86400)} days
       </p>
 
       {/* Show thumbs depending on status */}
       {status === "ok" && (
         <img
-          src="/images/thumbs-up.jpg"
+          src={thumbsUpUrl}
           alt="Thumbs Up"
-          className="w-20 h-20"
+          className="w-20 md:w-28 lg:w-32"
         />
       )}
       {status === "notok" && (
         <img
-          src="/images/thumbs-down.jpg"
+          src={thumbsDownUrl}
           alt="Thumbs Down"
-          className="w-20 h-20"
+          className="w-20 md:w-28 lg:w-32"
         />
       )}
 
       {/* Tap thumbs up to reset, double click opens settings */}
       <img
-        src="/images/thumbs-up.jpg"
+        src={thumbsUpUrl}
         alt="Tap to reset"
-        className="w-16 h-16 cursor-pointer"
+        className="w-16 md:w-24 lg:w-28 cursor-pointer"
         onClick={handleThumbsUp}
         onDoubleClick={() => setShowSettings(true)}
       />
