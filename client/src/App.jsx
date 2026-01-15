@@ -36,7 +36,7 @@ export default function App() {
 
       <img
         src={secondsLeft > 0 ? thumbsUpUrl : thumbsDownUrl}
-        alt={secondsLeft > 0 ? "Thumbs Up" : "Thumbs Down"}
+        alt="Thumb picture"
         className="thumb"
         onClick={handleThumbClick}
         onDoubleClick={() => setShowSettings(true)}
