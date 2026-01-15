@@ -36,8 +36,8 @@ export default function Settings({ onClose }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-      <h2 className="text-xl font-bold mb-4">⚙️ Settings</h2>
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 className="text-lg md:text-xl font-bold mb-4">⚙️ Settings</h2>
 
       <label className="block mb-4">
         <span>User Email</span>
@@ -45,7 +45,7 @@ export default function Settings({ onClose }) {
           type="email"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
-          className="block w-full border p-2 mt-1"
+          className="block w-full border p-2 md:p-3 mt-1 rounded-lg"
         />
       </label>
 
@@ -55,7 +55,7 @@ export default function Settings({ onClose }) {
           type="email"
           value={contactEmail}
           onChange={(e) => setContactEmail(e.target.value)}
-          className="block w-full border p-2 mt-1"
+          className="block w-full border p-2 md:p-3 mt-1 rounded-lg"
         />
       </label>
 
@@ -64,7 +64,7 @@ export default function Settings({ onClose }) {
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="block w-full border p-2 mt-1"
+          className="block w-full border p-2 md:p-3 mt-1 rounded-lg"
         />
       </label>
 
@@ -74,7 +74,7 @@ export default function Settings({ onClose }) {
           type="number"
           value={interval}
           onChange={(e) => setInterval(Number(e.target.value))}
-          className="block w-full border p-2 mt-1"
+          className="block w-full border p-2 md:p-3 mt-1 rounded-lg"
         />
       </label>
 
@@ -84,7 +84,7 @@ export default function Settings({ onClose }) {
           type="text"
           value={thumbsUpUrl}
           onChange={(e) => setThumbsUpUrl(e.target.value)}
-          className="block w-full border p-2 mt-1"
+          className="block w-full border p-2 md:p-3 mt-1 rounded-lg"
         />
       </label>
 
@@ -94,7 +94,7 @@ export default function Settings({ onClose }) {
           type="text"
           value={thumbsDownUrl}
           onChange={(e) => setThumbsDownUrl(e.target.value)}
-          className="block w-full border p-2 mt-1"
+          className="block w-full border p-2 md:p-3 mt-1 rounded-lg"
         />
       </label>
 
