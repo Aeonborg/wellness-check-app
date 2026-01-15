@@ -24,7 +24,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Thumbs image: always centered, fixed % of screen height */
+/* Thumb picture: always centered, scaled by screen height */
 .thumb {
   display: block;
   margin: 1rem auto;
