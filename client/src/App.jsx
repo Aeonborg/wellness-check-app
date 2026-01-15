@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Settings from "./Settings";
+import "./index.css";
 
 export default function App() {
-  const DEFAULT_INTERVAL = 604800; // 7 days in seconds
+  const DEFAULT_INTERVAL = 604800; // 7 days
   const [secondsLeft, setSecondsLeft] = useState(DEFAULT_INTERVAL);
-  const [status, setStatus] = useState("pending");
   const [showSettings, setShowSettings] = useState(false);
 
-  // Load saved settings
   const saved = JSON.parse(localStorage.getItem("userSettings") || "{}");
   const thumbsUpUrl =
     saved.thumbsUpUrl ||
@@ -17,7 +16,6 @@ export default function App() {
     "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-down.jpg";
   const intervalSeconds = saved.interval || DEFAULT_INTERVAL;
 
-  // countdown effect
   useEffect(() => {
     const timer = setInterval(() => {
       setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
@@ -25,34 +23,22 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (secondsLeft === 0) {
-      setStatus("notok");
-    }
-  }, [secondsLeft]);
-
-  const handleThumbsUp = () => {
+  const handleThumbClick = () => {
+    // If timer > 0, just reset without changing display
+    // If timer <= 0, reset and switch back to thumbs-up
     setSecondsLeft(intervalSeconds);
-    setStatus("ok");
   };
 
   return (
     <div className="container">
-      <h1>Wellness Check</h1>
-      <p>Time left: {Math.floor(secondsLeft / 86400)} days</p>
-
-      {status === "ok" && (
-        <img src={thumbsUpUrl} alt="Thumbs Up" className="thumb" />
-      )}
-      {status === "notok" && (
-        <img src={thumbsDownUrl} alt="Thumbs Down" className="thumb" />
-      )}
+      <h1 className="title">Wellness Check</h1>
+      <p className="timer">Time left: {Math.floor(secondsLeft / 86400)} days</p>
 
       <img
-        src={thumbsUpUrl}
-        alt="Tap to reset"
-        className="tap"
-        onClick={handleThumbsUp}
+        src={secondsLeft > 0 ? thumbsUpUrl : thumbsDownUrl}
+        alt={secondsLeft > 0 ? "Thumbs Up" : "Thumbs Down"}
+        className="thumb"
+        onClick={handleThumbClick}
         onDoubleClick={() => setShowSettings(true)}
       />
 
