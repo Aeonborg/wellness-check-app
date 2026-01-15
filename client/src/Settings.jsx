@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import Settings from "./Settings";
 
 export default function App() {
-  const DEFAULT_INTERVAL = 604800; // 7 days in seconds
+  const DEFAULT_INTERVAL = 604800; // 7 days
   const [secondsLeft, setSecondsLeft] = useState(DEFAULT_INTERVAL);
   const [showSettings, setShowSettings] = useState(false);
 
-  // Load saved settings
   const saved = JSON.parse(localStorage.getItem("userSettings") || "{}");
   const thumbsUpUrl =
     saved.thumbsUpUrl ||
@@ -25,7 +24,13 @@ export default function App() {
   }, []);
 
   const handleThumbClick = () => {
-    setSecondsLeft(intervalSeconds);
+    if (secondsLeft > 0) {
+      // just reset the timer, keep thumbs-up display
+      setSecondsLeft(intervalSeconds);
+    } else {
+      // timer expired, reset and switch back to thumbs-up
+      setSecondsLeft(intervalSeconds);
+    }
   };
 
   return (
