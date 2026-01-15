@@ -37,26 +37,21 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 gap-6 px-4">
-      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-center">
-        Wellness Check
-      </h1>
-
-      <p className="text-base md:text-lg lg:text-xl">
-        Time left: {Math.floor(secondsLeft / 86400)} days
-      </p>
+    <div className="container">
+      <h1>Wellness Check</h1>
+      <p>Time left: {Math.floor(secondsLeft / 86400)} days</p>
 
       {status === "ok" && (
-        <img src={thumbsUpUrl} alt="Thumbs Up" className="w-20 md:w-28 lg:w-32" />
+        <img src={thumbsUpUrl} alt="Thumbs Up" className="thumb" />
       )}
       {status === "notok" && (
-        <img src={thumbsDownUrl} alt="Thumbs Down" className="w-20 md:w-28 lg:w-32" />
+        <img src={thumbsDownUrl} alt="Thumbs Down" className="thumb" />
       )}
 
       <img
         src={thumbsUpUrl}
         alt="Tap to reset"
-        className="w-16 md:w-24 lg:w-28 cursor-pointer"
+        className="tap"
         onClick={handleThumbsUp}
         onDoubleClick={() => setShowSettings(true)}
       />
