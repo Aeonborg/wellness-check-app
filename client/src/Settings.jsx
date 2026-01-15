@@ -4,7 +4,7 @@ export default function Settings({ onClose }) {
   const [userEmail, setUserEmail] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [message, setMessage] = useState("No check-in received. Please reach out.");
-  const [interval, setInterval] = useState(604800); // default 7 days
+  const [interval, setInterval] = useState(604800);
   const [thumbsUpUrl, setThumbsUpUrl] = useState(
     "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-up.jpg"
   );
@@ -12,7 +12,6 @@ export default function Settings({ onClose }) {
     "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-down.jpg"
   );
 
-  // Load saved settings
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("userSettings"));
     if (saved) {
@@ -40,82 +39,91 @@ export default function Settings({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-lg mx-4">
-        <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">⚙️ Settings</h2>
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,0.4)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        style={{
+          background: "white",
+          padding: "20px",
+          borderRadius: "8px",
+          width: "90%",
+          maxWidth: "500px",
+        }}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>⚙️ Settings</h2>
 
-        <div className="space-y-4">
-          <label className="block">
-            <span className="font-medium">User Email</span>
-            <input
-              type="email"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-              className="block w-full border p-2 rounded-lg mt-1"
-            />
-          </label>
+        <label>
+          User Email
+          <input
+            type="email"
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
+          />
+        </label>
 
-          <label className="block">
-            <span className="font-medium">Contact Email</span>
-            <input
-              type="email"
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
-              className="block w-full border p-2 rounded-lg mt-1"
-            />
-          </label>
+        <label>
+          Contact Email
+          <input
+            type="email"
+            value={contactEmail}
+            onChange={(e) => setContactEmail(e.target.value)}
+            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
+          />
+        </label>
 
-          <label className="block">
-            <span className="font-medium">Message</span>
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="block w-full border p-2 rounded-lg mt-1"
-            />
-          </label>
+        <label>
+          Message
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
+          />
+        </label>
 
-          <label className="block">
-            <span className="font-medium">Check Interval (seconds)</span>
-            <input
-              type="number"
-              value={interval}
-              onChange={(e) => setInterval(Number(e.target.value))}
-              className="block w-full border p-2 rounded-lg mt-1"
-            />
-          </label>
+        <label>
+          Check Interval (seconds)
+          <input
+            type="number"
+            value={interval}
+            onChange={(e) => setInterval(Number(e.target.value))}
+            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
+          />
+        </label>
 
-          <label className="block">
-            <span className="font-medium">Thumbs Up Image URL</span>
-            <input
-              type="text"
-              value={thumbsUpUrl}
-              onChange={(e) => setThumbsUpUrl(e.target.value)}
-              className="block w-full border p-2 rounded-lg mt-1"
-            />
-          </label>
+        <label>
+          Thumbs Up Image URL
+          <input
+            type="text"
+            value={thumbsUpUrl}
+            onChange={(e) => setThumbsUpUrl(e.target.value)}
+            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
+          />
+        </label>
 
-          <label className="block">
-            <span className="font-medium">Thumbs Down Image URL</span>
-            <input
-              type="text"
-              value={thumbsDownUrl}
-              onChange={(e) => setThumbsDownUrl(e.target.value)}
-              className="block w-full border p-2 rounded-lg mt-1"
-            />
-          </label>
-        </div>
+        <label>
+          Thumbs Down Image URL
+          <input
+            type="text"
+            value={thumbsDownUrl}
+            onChange={(e) => setThumbsDownUrl(e.target.value)}
+            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
+          />
+        </label>
 
-        <div className="flex justify-center gap-4 mt-6">
-          <button
-            onClick={saveSettings}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
-          >
+        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginTop: "1rem" }}>
+          <button onClick={saveSettings} style={{ padding: "10px 20px", background: "#4f46e5", color: "white", border: "none", borderRadius: "6px" }}>
             Save
           </button>
-          <button
-            onClick={onClose}
-            className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400"
-          >
+          <button onClick={onClose} style={{ padding: "10px 20px", background: "#ccc", border: "none", borderRadius: "6px" }}>
             Cancel
           </button>
         </div>
