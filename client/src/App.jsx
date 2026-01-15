@@ -7,7 +7,7 @@ export default function App() {
   const [status, setStatus] = useState("pending"); // "pending", "ok", "notok"
   const [showSettings, setShowSettings] = useState(false);
 
-  // Load saved settings (images, interval) from localStorage
+  // Load saved settings
   const saved = JSON.parse(localStorage.getItem("userSettings") || "{}");
   const thumbsUpUrl = saved.thumbsUpUrl || "/images/thumbs-up.jpg";
   const thumbsDownUrl = saved.thumbsDownUrl || "/images/thumbs-down.jpg";
