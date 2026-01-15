@@ -1,133 +1,69 @@
 import React, { useState, useEffect } from "react";
+import Settings from "./Settings";
 
-export default function Settings({ onClose }) {
-  const [userEmail, setUserEmail] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [message, setMessage] = useState("No check-in received. Please reach out.");
-  const [interval, setInterval] = useState(604800);
-  const [thumbsUpUrl, setThumbsUpUrl] = useState(
-    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-up.jpg"
-  );
-  const [thumbsDownUrl, setThumbsDownUrl] = useState(
-    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-down.jpg"
-  );
+export default function App() {
+  const DEFAULT_INTERVAL = 604800; // 7 days in seconds
+  const [secondsLeft, setSecondsLeft] = useState(DEFAULT_INTERVAL);
+  const [showSettings, setShowSettings] = useState(false);
 
+  // Load saved settings
+  const saved = JSON.parse(localStorage.getItem("userSettings") || "{}");
+  const thumbsUpUrl =
+    saved.thumbsUpUrl ||
+    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-up.jpg";
+  const thumbsDownUrl =
+    saved.thumbsDownUrl ||
+    "https://rgdkozcbblfgjljtxnlq.supabase.co/storage/v1/object/public/thumbs/thumbs-down.jpg";
+  const intervalSeconds = saved.interval || DEFAULT_INTERVAL;
+
+  // countdown effect
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("userSettings"));
-    if (saved) {
-      setUserEmail(saved.userEmail || "");
-      setContactEmail(saved.contactEmail || "");
-      setMessage(saved.message || "");
-      setInterval(saved.interval || 604800);
-      setThumbsUpUrl(saved.thumbsUpUrl || thumbsUpUrl);
-      setThumbsDownUrl(saved.thumbsDownUrl || thumbsDownUrl);
-    }
+    const timer = setInterval(() => {
+      setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
 
-  const saveSettings = () => {
-    const settings = {
-      userEmail,
-      contactEmail,
-      message,
-      interval,
-      thumbsUpUrl,
-      thumbsDownUrl,
-    };
-    localStorage.setItem("userSettings", JSON.stringify(settings));
-    alert("Settings saved!");
-    onClose();
+  const handleThumbClick = () => {
+    setSecondsLeft(intervalSeconds);
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.4)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          background: "white",
-          padding: "20px",
-          borderRadius: "8px",
-          width: "90%",
-          maxWidth: "500px",
-        }}
-      >
-        <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>⚙️ Settings</h2>
+    <div style={styles.container}>
+      <h1 style={styles.title}>Wellness Check</h1>
+      <p style={styles.timer}>Time left: {Math.floor(secondsLeft / 86400)} days</p>
 
-        <label>
-          User Email
-          <input
-            type="email"
-            value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
-            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
-          />
-        </label>
+      <img
+        src={secondsLeft > 0 ? thumbsUpUrl : thumbsDownUrl}
+        alt={secondsLeft > 0 ? "Thumbs Up" : "Thumbs Down"}
+        style={styles.thumb}
+        onClick={handleThumbClick}
+        onDoubleClick={() => setShowSettings(true)}
+      />
 
-        <label>
-          Contact Email
-          <input
-            type="email"
-            value={contactEmail}
-            onChange={(e) => setContactEmail(e.target.value)}
-            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
-          />
-        </label>
-
-        <label>
-          Message
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
-          />
-        </label>
-
-        <label>
-          Check Interval (seconds)
-          <input
-            type="number"
-            value={interval}
-            onChange={(e) => setInterval(Number(e.target.value))}
-            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
-          />
-        </label>
-
-        <label>
-          Thumbs Up Image URL
-          <input
-            type="text"
-            value={thumbsUpUrl}
-            onChange={(e) => setThumbsUpUrl(e.target.value)}
-            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
-          />
-        </label>
-
-        <label>
-          Thumbs Down Image URL
-          <input
-            type="text"
-            value={thumbsDownUrl}
-            onChange={(e) => setThumbsDownUrl(e.target.value)}
-            style={{ width: "100%", margin: "0.5rem 0", padding: "8px" }}
-          />
-        </label>
-
-        <div style={{ display: "flex", justifyContent: "center", gap: "1rem", marginTop: "1rem" }}>
-          <button onClick={saveSettings} style={{ padding: "10px 20px", background: "#4f46e5", color: "white", border: "none", borderRadius: "6px" }}>
-            Save
-          </button>
-          <button onClick={onClose} style={{ padding: "10px 20px", background: "#ccc", border: "none", borderRadius: "6px" }}>
-            Cancel
-          </button>
-        </div>
-      </div>
+      {showSettings && <Settings onClose={() => setShowSettings(false)} />}
     </div>
   );
 }
+
+const styles = {
+  container: {
+    minHeight: "100vh",
+    background: "#f5f5f5",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    padding: "1rem",
+  },
+  title: { fontSize: "2rem", marginBottom: "1rem" },
+  timer: { fontSize: "1.2rem", marginBottom: "1rem" },
+  thumb: {
+    maxWidth: "200px",
+    width: "80%",
+    height: "auto",
+    margin: "1rem auto",
+    cursor: "pointer",
+  },
+};
